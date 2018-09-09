@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  rtorrent:
+    build: rtorrent
+    tty: true
+    restart: on-failure
+    ports:
+      - "55000:55000"
+    networks:
+      - rtorrent
+    volumes:
+      - $PWD/data/sock:/torrent
+      - $PWD/data/rtorrent:/download
+
+  flood:
+    build: flood
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - rtorrent
+    volumes:
+      - $PWD/data/sock:/torrent
+      - $PWD/data/flood:/data/server/db/
+
+networks: 
+  rtorrent:
