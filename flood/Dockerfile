@@ -1,4 +1,4 @@
-FROM node:alpine AS build
+FROM node:10.1-alpine AS build
 WORKDIR /usr/src/app
 
 ENV \
@@ -6,7 +6,7 @@ ENV \
 	GLIBC_VERSION=2.28-r0
 
 RUN \
-	apk add -U --no-cache git python make gcc wget libc-dev g++ mediainfo && \
+	apk add -U --no-cache git python mediainfo build-base && \
 	mkdir -p /usr/src/app && \
 	git clone $FLOOD_GIT_URI /usr/src/app
 
@@ -14,10 +14,9 @@ COPY include/config.js /usr/src/app/config.js
 
 RUN \
 	npm install && \
-	npm cache clean --force && \
 	npm run build
 
-FROM node:alpine
+FROM node:10.1-alpine
 WORKDIR /usr/src/app
 
 RUN apk add -U --no-cache mediainfo
