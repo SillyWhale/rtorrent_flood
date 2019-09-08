@@ -22,4 +22,4 @@ WORKDIR /usr/src/app
 RUN apk add -U --no-cache mediainfo
 COPY --from=build /usr/src/app /usr/src/app
 
-CMD [ "npm", "run", "start:production" ]
+CMD [ "npm", "run", "start" ]
